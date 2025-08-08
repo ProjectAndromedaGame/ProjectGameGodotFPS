@@ -1,0 +1,86 @@
+[gd_scene load_steps=8 format=3 uid="uid://bv85hwhm3hpsb"]
+
+[ext_resource type="Material" uid="uid://ci1025ogybqng" path="res://assets/textures/main.material" id="2_0wfyh"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o5qli"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_0wfyh"]
+sky_material = SubResource("ProceduralSkyMaterial_o5qli")
+
+[sub_resource type="Environment" id="Environment_sugp2"]
+background_mode = 2
+sky = SubResource("Sky_0wfyh")
+tonemap_mode = 2
+sdfgi_enabled = true
+glow_enabled = true
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o5qli"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_o5qli"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_o5qli"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_sugp2")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="ctrl" type="Controller" parent="."]
+
+[node name="Character" type="Character" parent="ctrl"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.798681, 1.49965, -0.178243)
+slide_on_ceiling = false
+
+[node name="Camera3D" type="Camera3D" parent="ctrl/Character"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.990159, 1.18936, 2.17525)
+fov = 97.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ctrl/Character"]
+visible = false
+shape = SubResource("CapsuleShape3D_o5qli")
+debug_color = Color(0, 0.598582, 0.708097, 0.42)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ctrl/Character"]
+gi_mode = 2
+mesh = SubResource("CapsuleMesh_o5qli")
+skeleton = NodePath("../CollisionShape3D")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ctrl/Character"]
+transform = Transform3D(0.32965, 0, 0, 0, 0.174472, 0, 0, 0, 1.57223, 0, 0.550842, -0.115748)
+mesh = SubResource("BoxMesh_o5qli")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+size = Vector3(54.995, 1, 47.1682)
+material = ExtResource("2_0wfyh")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.182149, 2.62564, -5.31655)
+height = 4.65137
+material = ExtResource("2_0wfyh")
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.62732, -0.0960221, -5.62011)
+radius = 2.49072
+height = 2.50897
+material = ExtResource("2_0wfyh")
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.81219, -0.0960221, -5.15792)
+operation = 2
+radius = 2.49072
+height = 2.50897
+material = ExtResource("2_0wfyh")
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="CSGCombiner3D"]
+transform = Transform3D(5.96169, 0, 2.2507, 0, 3.69248, 0, -5.37151, 0, 2.49799, -4.67168, 0.402602, -4.636)
+polygon = PackedVector2Array(0, 0, 1, 1, 1, 0)
+material = ExtResource("2_0wfyh")

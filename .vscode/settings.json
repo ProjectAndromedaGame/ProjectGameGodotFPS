@@ -1,0 +1,32 @@
+{
+    "files.exclude": {
+        "**/*.obj": true,
+        "**/*.exe": true,
+        "**/*.dll": true,
+        "**/*.lib": true,
+        "**/*.exp": true,
+        "**/*.log": true,
+        "**/bin/": true
+    },
+    "search.exclude": {
+        "**/bin/": true,
+        "**/*.obj": true,
+        "**/*.dll": true
+    },
+    "editor.formatOnSave": true,
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "C_Cpp.intelliSenseEngine": "Default",
+    "editor.tabSize": 4,
+    "editor.detectIndentation": false,
+    "files.associations": {
+        "*.tres": "ini",
+        "*.tscn": "ini",
+        "*.gd": "gdscript",
+        "ios": "cpp",
+        "type_traits": "cpp"
+    },
+    "code-runner.executorMap": {
+        "bat": "cmd /c \"${fileDirname}\\compile.bat\""
+    },
+    "code-runner.runInTerminal": true
+}
