@@ -10,6 +10,7 @@
 #include <godot_cpp/core/class_db.hpp>
 
 #include "character.h"
+#include "input_capture.h"
 #include "icontrollable.h"
 
 using namespace godot;
@@ -22,6 +23,7 @@ class Controller : public Node
 private:
     Input *input;
     Character *character;
+
 
 public:
     Controller();

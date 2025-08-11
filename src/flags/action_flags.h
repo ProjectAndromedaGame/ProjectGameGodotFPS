@@ -1,6 +1,8 @@
 #ifndef ACTION_FLAGS_H
 #define ACTION_FLAGS_H
 
+
+
 enum ActionFlags {
     NONE = 0,
     JUMP = 1 << 0,
