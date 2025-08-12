@@ -4,18 +4,17 @@
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/input_event.hpp>
 #include <godot_cpp/classes/input_event_mouse_motion.hpp>
-#include "user_cmd.h"
+#include "flags/action_flags.h"
 
 class InputHandler
 {
 private:
-    
-    /* data */
+        /* data */
 public:
     InputHandler(/* args */);
     ~InputHandler();
-    int get_buttons_flags(Input *input);
-    UserCmd create_usercmd(const Ref<InputEvent> &event);
+    static uint32_t get_buttons_flags(Input *input);
+    static UserCmd create_usercmd(const Ref<InputEvent> &event);
 };
 
 #endif

@@ -5,11 +5,6 @@ Character::~Character() {}
 
 void Character::_bind_methods()
 {
-    ClassDB::bind_method(D_METHOD("move", "direction"), &Character::move);
-    ClassDB::bind_method(D_METHOD("rotate", "delta"), &Character::rotate);
-    ClassDB::bind_method(D_METHOD("do_action", "action"), &Character::do_action);
-    ClassDB::bind_method(D_METHOD("moving", "delta"), &Character::moving);
-    ClassDB::bind_method(D_METHOD("looking", "delta"), &Character::looking);
 }
 
 
@@ -24,7 +19,7 @@ void Character::rotate(Vector2 delta)
 }
 
 
-void Character::do_action(ActionFlags action)
+void Character::do_action(uint32_t action)
 {
     current_actions |= action;
 }
@@ -44,21 +39,21 @@ void Character::moving(double delta)
     {
         velocity.y = 0;
     }
-    if (current_actions & JUMP)
+    if (current_actions & IN_JUMP)
     {
         if (is_on_floor())
         {
             velocity.y = 5.0;
         }
-        current_actions &= ~JUMP;
+        current_actions &= ~IN_JUMP;
     }
-    if (current_actions & CROUCH)
+    if (current_actions & IN_CROUCH)
     {
-        current_actions &= ~CROUCH;
+        current_actions &= ~IN_CROUCH;
     }
-    if (current_actions & RUN)
+    if (current_actions & IN_RUN)
     {
-        current_actions &= ~RUN;
+        current_actions &= ~IN_RUN;
     }
     set_velocity(velocity);
     move_and_slide();
@@ -69,15 +64,15 @@ void Character::looking(double delta)
     double yaw = mouse_delta.x * delta * 0.1;
     rotate_y(yaw);
 
-    if (current_actions & SHOOT)
+    if (current_actions & IN_ACTION)
     {
         godot::print_line("Shooting logic not implemented yet.");
-        current_actions &= ~SHOOT;
+        current_actions &= ~IN_ACTION;
     }
-    if (current_actions & RELOAD)
+    if (current_actions & IN_RELOAD)
     {
         godot::print_line("Reloading logic not implemented yet.");
-        current_actions &= ~RELOAD;
+        current_actions &= ~IN_RELOAD;
     }
 }
 

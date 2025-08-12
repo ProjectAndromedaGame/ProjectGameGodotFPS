@@ -8,9 +8,9 @@
 
 #include <godot_cpp/core/class_db.hpp>
 
-#include "character.h"
-#include "input_handler.h"
-#include "icontrollable.h"
+#include "classes/character.h"
+#include "classes/input_handler.h"
+#include "interfaces/icontrollable.h"
 
 using namespace godot;
 

@@ -9,7 +9,7 @@
 
 #include <godot_cpp/core/class_db.hpp>
 
-#include "icontrollable.h"
+#include "interfaces/icontrollable.h"
 
 using namespace godot;
 
@@ -20,7 +20,7 @@ private:
     Vector3 direction = Vector3(0, 0, 0);
     Vector2 mouse_delta = Vector2(0, 0);
     float speed = 5.0f; // Default speed
-    int current_actions = NONE; // Current actions flags
+    uint32_t current_actions = NONE; // Current actions flags
     
 public:
 
@@ -29,7 +29,7 @@ public:
 
     virtual void move(Vector3 direction) override;
     virtual void rotate(Vector2 delta) override;
-    virtual void do_action(ActionFlags action) override;
+    virtual void do_action(uint32_t action) override;
     virtual void moving(double delta) override;
     virtual void looking(double delta) override;
 

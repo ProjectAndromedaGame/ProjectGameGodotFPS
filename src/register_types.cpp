@@ -1,7 +1,7 @@
 #include "register_types.h"
 
-#include "character.h"
-#include "controller.h"
+#include "classes/character.h"
+#include "classes/controller.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
