@@ -1,7 +1,6 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-
 #include <godot_cpp/classes/node.hpp>
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/input_event.hpp>
@@ -10,7 +9,7 @@
 #include <godot_cpp/core/class_db.hpp>
 
 #include "character.h"
-#include "input_capture.h"
+#include "input_handler.h"
 #include "icontrollable.h"
 
 using namespace godot;
@@ -23,7 +22,6 @@ class Controller : public Node
 private:
     Input *input;
     Character *character;
-
 
 public:
     Controller();

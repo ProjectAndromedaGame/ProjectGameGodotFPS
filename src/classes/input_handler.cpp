@@ -1,4 +1,4 @@
-#include "input_capture.h"
+#include "input_handler.h"
 
 int get_button_flags(Input *input){
     int buttons = 0;

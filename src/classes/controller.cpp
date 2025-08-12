@@ -33,7 +33,7 @@ void Controller::_process(double delta) {}
 
 void Controller::_input(const Ref<InputEvent> &event) {
 
-    UserCmd cmd = InputCapture::create_usercmd(event);
+    UserCmd cmd = InputHandler::create_usercmd(event);
 
     if (character != nullptr) {
         
