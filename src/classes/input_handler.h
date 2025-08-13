@@ -4,10 +4,11 @@
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/input_event.hpp>
 #include <godot_cpp/classes/input_event_mouse_motion.hpp>
+#include <godot_cpp/core/Node.hpp>
 #include "flags/action_flags.h"
 
-class InputHandler
-{
+class InputHandler : public Node {
+    GDCLASS(InputHandler, Node);
 private:
         /* data */
 public:
