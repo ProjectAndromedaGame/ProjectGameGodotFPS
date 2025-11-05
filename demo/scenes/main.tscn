@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bv85hwhm3hpsb"]
+[gd_scene load_steps=5 format=3 uid="uid://bv85hwhm3hpsb"]
 
 [ext_resource type="Material" uid="uid://ci1025ogybqng" path="res://assets/textures/main.material" id="2_0wfyh"]
 
@@ -16,12 +16,6 @@ tonemap_mode = 2
 sdfgi_enabled = true
 glow_enabled = true
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o5qli"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_o5qli"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_o5qli"]
-
 [node name="Node3D" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -30,30 +24,6 @@ environment = SubResource("Environment_sugp2")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
-
-[node name="ctrl" type="Controller" parent="."]
-
-[node name="Character" type="Character" parent="ctrl"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.798681, 1.49965, -0.178243)
-slide_on_ceiling = false
-
-[node name="Camera3D" type="Camera3D" parent="ctrl/Character"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.990159, 1.18936, 2.17525)
-fov = 97.0
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ctrl/Character"]
-visible = false
-shape = SubResource("CapsuleShape3D_o5qli")
-debug_color = Color(0, 0.598582, 0.708097, 0.42)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ctrl/Character"]
-gi_mode = 2
-mesh = SubResource("CapsuleMesh_o5qli")
-skeleton = NodePath("../CollisionShape3D")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="ctrl/Character"]
-transform = Transform3D(0.32965, 0, 0, 0, 0.174472, 0, 0, 0, 1.57223, 0, 0.550842, -0.115748)
-mesh = SubResource("BoxMesh_o5qli")
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
 use_collision = true
@@ -84,3 +54,13 @@ material = ExtResource("2_0wfyh")
 transform = Transform3D(5.96169, 0, 2.2507, 0, 3.69248, 0, -5.37151, 0, 2.49799, -4.67168, 0.402602, -4.636)
 polygon = PackedVector2Array(0, 0, 1, 1, 1, 0)
 material = ExtResource("2_0wfyh")
+
+[node name="WorldController" type="WorldController" parent="."]
+
+[node name="Controller" type="Controller" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.500106, 0.652271, -0.569594, 1.49012e-08, 0.657757, 0.753231, 0.865964, -0.376695, 0.328948, -5.22623, 13.8338, 2.55809)
+projection = 1
+fov = 95.625
+size = 18.4549

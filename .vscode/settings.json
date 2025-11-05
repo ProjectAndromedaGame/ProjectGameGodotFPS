@@ -5,8 +5,7 @@
         "**/*.dll": true,
         "**/*.lib": true,
         "**/*.exp": true,
-        "**/*.log": true,
-        "**/bin/": true
+        "**/*.log": true
     },
     "search.exclude": {
         "**/bin/": true,
@@ -23,7 +22,17 @@
         "*.tscn": "ini",
         "*.gd": "gdscript",
         "ios": "cpp",
-        "type_traits": "cpp"
+        "type_traits": "cpp",
+        "array": "cpp",
+        "deque": "cpp",
+        "initializer_list": "cpp",
+        "list": "cpp",
+        "vector": "cpp",
+        "xhash": "cpp",
+        "xstring": "cpp",
+        "xtree": "cpp",
+        "xutility": "cpp",
+        "atomic": "cpp"
     },
     "code-runner.executorMap": {
         "bat": "cmd /c \"${fileDirname}\\compile.bat\""

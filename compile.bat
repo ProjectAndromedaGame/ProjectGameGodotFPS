@@ -1,2 +1,2 @@
-scons platform=windows 
+scons platform=windows
 pause

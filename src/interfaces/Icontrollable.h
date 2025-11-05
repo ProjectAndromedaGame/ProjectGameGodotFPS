@@ -1,25 +1,25 @@
 #ifndef ICONTROLLABLE_H
 #define ICONTROLLABLE_H
 
-#include <godot_cpp/variant/vector3.hpp> // Add this include for Vector3
-#include <godot_cpp/variant/vector2.hpp> // Add this include for Vector2
-#include "flags/action_flags.h"
+#include <godot_cpp/core/class_db.hpp>
+#include <godot_cpp/variant/vector2.hpp>
+
+#include "user_cmd.h"
 
 using namespace godot;
 
 
-
 class IControllable {
 public:
-    virtual void move(Vector3 direction) = 0;
+    virtual void move(float forward, float right, float up) = 0;
     virtual void rotate(Vector2 delta) = 0;
 
-    virtual void do_action(uint32_t action) = 0;
-
-    virtual void moving(double delta) = 0;
-    virtual void looking(double delta) = 0;
+    virtual void do_action(int32_t action) = 0;
 
     virtual ~IControllable() {}
+private:
+    virtual void moving(double delta) = 0;
+    virtual void looking(double delta) = 0;
 };
 
 #endif // ICONTROLLABLE_H
