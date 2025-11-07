@@ -8,8 +8,8 @@
 
 using namespace godot;
 
-
-class IControllable {
+class IControllable
+{
 public:
     virtual void move(float forward, float right, float up) = 0;
     virtual void rotate(Vector2 delta) = 0;
@@ -17,6 +17,7 @@ public:
     virtual void do_action(int32_t action) = 0;
 
     virtual ~IControllable() {}
+
 private:
     virtual void moving(double delta) = 0;
     virtual void looking(double delta) = 0;

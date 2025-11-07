@@ -7,7 +7,8 @@
 
 using namespace godot;
 
-enum ButtonFlags : uint32_t {
+enum ButtonFlags : uint32_t
+{
     NONE = 0,
     IN_JUMP = 1 << 0,
     IN_CROUCH = 1 << 1,
@@ -17,10 +18,11 @@ enum ButtonFlags : uint32_t {
     IN_RELOAD = 1 << 5,
 };
 
-struct UserCmd {
-    int64_t seq=0;
-    int64_t tick=0;
-    double dt=0.0;
+struct UserCmd
+{
+    int64_t seq = 0;
+    int64_t tick = 0;
+    double dt = 0.0;
     Vector2 view_angles = Vector2(0, 0);
     Vector2 view_delta = Vector2(0, 0);
     float forward_move = 0;
@@ -28,6 +30,5 @@ struct UserCmd {
     float up_move = 0;
     uint32_t buttons = 0;
 };
-
 
 #endif

@@ -53,10 +53,13 @@ func _physics_process(_dt: float) -> void:
 	up_move = Input.get_axis("action_crouch","action_jump")
 	# up_move queda en 0.0 salvo que tengas vuelo/jetpack continuo
 	# actualiza ángulos acumulados con el delta de este tick
-	view_angles.x = clamp(view_angles.x + view_delta.y * mouse_sens, pitch_min, pitch_max) # pitch (usa Y del mouse)
-	view_angles.y += view_delta.x * mouse_sens
+	view_angles.x += view_delta.x * mouse_sens
+	view_angles.y = clamp(view_angles.y - view_delta.y * mouse_sens, pitch_min, pitch_max) 
+	
 	user_cmd = build_usercmd()
+	print(view_angles)
 	Engine.get_singleton("GDBridge").set_user_cmd(user_cmd)
+	
 
 func build_usercmd() -> Dictionary:
 	var cmd := {
@@ -71,6 +74,9 @@ func build_usercmd() -> Dictionary:
 		"buttons": buttons,
 	}
 	view_delta = Vector2.ZERO
+	if view_angles.x > 360 or view_angles.x < -360:
+		view_angles.x = 0# pitch (usa Y del mouse)
+	
 	return cmd # empieza capturado si quieres
 
 func set_mouse_capture(on: bool) -> void:

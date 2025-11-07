@@ -1,7 +1,6 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-
 #include <godot_cpp/classes/character_body3d.hpp>
 #include <godot_cpp/classes/project_settings.hpp>
 #include <godot_cpp/classes/camera3d.hpp>
@@ -9,23 +8,26 @@
 
 #include <godot_cpp/core/class_db.hpp>
 
+#include "world_controller.h"
 #include "Icontrollable.h"
 #include "Ientity.h"
 
 using namespace godot;
 
-class Character : public CharacterBody3D, public IControllable, public IEntity {
+class Character : public CharacterBody3D, public IControllable, public IEntity
+{
     GDCLASS(Character, CharacterBody3D);
-private:
 
+private:
     float health = 100.0f;
+    float yaw = 0.0f;
+    float pitch = 0.0f;
     Vector3 direction = Vector3(0, 0, 0);
-    Vector2 mouse_delta = Vector2(0, 0);
-    float speed = 5.0f; // velocidad de movimiento
+    Vector2 view_angle = Vector2(0, 0);
+    float speed = 5.0f;         // velocidad de movimiento
     int current_actions = NONE; // Flags de acciones actuales
 
 public:
-
     Character();
     ~Character();
 
@@ -41,7 +43,7 @@ public:
 
     virtual float get_health() const override;
     virtual bool is_alive() const override;
-    virtual void take_damage(float damage, IEntity* source = nullptr) override;
+    virtual void take_damage(float damage, IEntity *source = nullptr) override;
 
     virtual void destroy() override;
 
@@ -49,6 +51,7 @@ public:
 
 protected:
     static void _bind_methods();
+
 private:
     virtual void moving(double delta) override;
     virtual void looking(double delta) override;

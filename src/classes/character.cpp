@@ -7,22 +7,15 @@ void Character::move(float forward, float right, float up)
 {
     /* input de movimiento
         Recibe tres valores: adelante, derecha, arriba y mueve el personaje en esa direccion
-        adelante y derecha son valores entre -1 y 1, arriba es un valor que puede ser positivo o negativo
-        por ejemplo, adelante = 1, derecha = 0, arriba = 0 mueve el personaje hacia adelante
-        adelante = 0, derecha = 1, arriba = 0 mueve el personaje hacia la derecha
-        adelante = 0, derecha = 0, arriba = 1 mueve el personaje hacia arriba
-        void Character::move(float forward, float right, float up) */
+        adelante y derecha son valores entre -1 y 1, arriba es un valor que puede ser positivo o negativo */
     Vector3 direction = Vector3(right, up, forward);
     this->direction = direction.normalized();
 }
 
-void Character::rotate(Vector2 delta)
+void Character::rotate(Vector2 angles)
 {
-    /* input de rotacion
-        recibe un Vector2 con el delta del mouse
-        y rota el personaje en base a ese delta
-    */
-    this->mouse_delta = delta;
+    yaw = Math::deg_to_rad(angles.x);
+    pitch = Math::deg_to_rad(angles.y);
 }
 
 void Character::do_action(int32_t action)
@@ -35,56 +28,24 @@ void Character::do_action(int32_t action)
 
 void Character::moving(double delta)
 {
-    double gravity = ProjectSettings::get_singleton()->get("physics/3d/default_gravity");
-    Vector3 velocity = get_velocity();
-    Vector3 relative_direction = get_global_transform().basis.xform(direction);
-    Vector3 aux_direction = relative_direction * speed;
-    velocity.x = aux_direction.x;
-    velocity.z = aux_direction.z;
-    if (!is_on_floor())
-    {
-        velocity.y -= gravity * delta;
-    }
-    else
-    {
-        velocity.y = 0;
-    }
-    if (current_actions & IN_JUMP)
-    {
-        if (is_on_floor())
-        {
-            velocity.y = 5.0;
-        }
-        current_actions &= ~IN_JUMP;
-    }
-    if (current_actions & IN_CROUCH)
-    {
-        current_actions &= ~IN_CROUCH;
-    }
-    if (current_actions & IN_RUN)
-    {
-        current_actions &= ~IN_RUN;
-    }
+    float cos_yaw = Math::cos(yaw);
+    float sin_yaw = Math::sin(yaw);
+
+    Vector3 world_dir = Vector3(
+        direction.z * sin_yaw + direction.x * cos_yaw,
+        direction.y,
+        direction.z * cos_yaw - direction.x * sin_yaw);
+
+    Vector3 velocity = world_dir * speed;
     set_velocity(velocity);
     move_and_slide();
 }
 
 void Character::looking(double delta)
 {
-    double yaw = mouse_delta.x * delta * 0.1;
-    rotate_y(yaw);
-    // Reset mouse delta after processing
 
-    if (current_actions & IN_SHOOT)
-    {
-        godot::print_line("Shooting logic not implemented yet.");
-        current_actions &= ~IN_SHOOT;
-    }
-    if (current_actions & IN_RELOAD)
-    {
-        godot::print_line("Reloading logic not implemented yet.");
-        current_actions &= ~IN_RELOAD;
-    }
+    Vector3 new_rotation = Vector3(0, yaw, 0);
+    set_rotation(new_rotation);
 }
 
 EntityType Character::get_entity_type() const
@@ -117,7 +78,7 @@ bool Character::is_alive() const
     return health > 0;
 }
 
-void Character::take_damage(float damage, IEntity* source)
+void Character::take_damage(float damage, IEntity *source)
 {
     health -= damage;
     if (health <= 0)
@@ -131,13 +92,17 @@ void Character::take_damage(float damage, IEntity* source)
     }
 }
 
-void Character::destroy() {
+void Character::destroy()
+{
     queue_free();
 }
 
-
 void Character::_physics_process(double delta)
 {
+    if (!WorldController::get_singleton()->can_play())
+    {
+        return;
+    }
     moving(delta);
     looking(delta);
 }

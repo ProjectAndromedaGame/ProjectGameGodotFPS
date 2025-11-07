@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bv85hwhm3hpsb"]
+[gd_scene load_steps=11 format=3 uid="uid://bv85hwhm3hpsb"]
 
 [ext_resource type="Material" uid="uid://ci1025ogybqng" path="res://assets/textures/main.material" id="2_0wfyh"]
+[ext_resource type="Material" uid="uid://b07y3wj66ikgy" path="res://assets/textures/cuerpo.tres" id="2_sugp2"]
+[ext_resource type="Material" uid="uid://4u7rrakdqbst" path="res://assets/textures/glass.tres" id="3_jyhfs"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o5qli"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -15,6 +17,20 @@ sky = SubResource("Sky_0wfyh")
 tonemap_mode = 2
 sdfgi_enabled = true
 glow_enabled = true
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tbgi4"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_tefeu"]
+material = ExtResource("2_sugp2")
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_o6xl0"]
+uv2_padding = 0.0
+radial_segments = 20
+rings = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_tipki"]
+lightmap_size_hint = Vector2i(14, 21)
+material = ExtResource("2_sugp2")
 
 [node name="Node3D" type="Node3D"]
 
@@ -57,10 +73,30 @@ material = ExtResource("2_0wfyh")
 
 [node name="WorldController" type="WorldController" parent="."]
 
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.990483, -0.108763, 0.0843439, -7.46638e-09, 0.612811, 0.79023, -0.137635, 0.782709, -0.606979, -0.666795, 3.50597, -7.01202)
+fov = 51.5411
+size = 18.4549
+
 [node name="Controller" type="Controller" parent="."]
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.500106, 0.652271, -0.569594, 1.49012e-08, 0.657757, 0.753231, 0.865964, -0.376695, 0.328948, -5.22623, 13.8338, 2.55809)
-projection = 1
-fov = 95.625
-size = 18.4549
+[node name="Character" type="Character" parent="Controller"]
+transform = Transform3D(1.00212, 0, 0, 0, 1.00212, 0, 0, 0, 1.00212, 0, 1.97675, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Controller/Character"]
+shape = SubResource("CapsuleShape3D_tbgi4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Controller/Character"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_tefeu")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Controller/Character/MeshInstance3D"]
+transform = Transform3D(0.836676, 0, 0, 0, 0.278247, 0, 0, 0, 1, 0.120947, 0.371864, 0)
+material_override = ExtResource("3_jyhfs")
+mesh = SubResource("CapsuleMesh_o6xl0")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Controller/Character/MeshInstance3D/MeshInstance3D2"]
+transform = Transform3D(0.472813, 0, 0, 0, 3.6083, 0, 0, 0, 0.512101, -0.826794, -1.17125, 0)
+mesh = SubResource("BoxMesh_tipki")
+skeleton = NodePath("../../..")

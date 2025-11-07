@@ -18,7 +18,6 @@ private:
     UserCmd current_user_cmd;
     Dictionary current_user_cmd_dict;
     static GDBridge *instance;
-    
 
 public:
     GDBridge();
