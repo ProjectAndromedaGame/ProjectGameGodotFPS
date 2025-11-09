@@ -21,6 +21,7 @@ public:
 private:
     virtual void moving(double delta) = 0;
     virtual void looking(double delta) = 0;
+    virtual void in_action(int32_t action) = 0;
 };
 
 #endif // ICONTROLLABLE_H

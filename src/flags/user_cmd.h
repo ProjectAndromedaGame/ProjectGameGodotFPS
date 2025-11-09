@@ -16,6 +16,7 @@ enum ButtonFlags : uint32_t
     IN_SHOOT = 1 << 3,
     IN_AIM = 1 << 4,
     IN_RELOAD = 1 << 5,
+    SWITCH_CAMERA = 1 << 6,
 };
 
 struct UserCmd

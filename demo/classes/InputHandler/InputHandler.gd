@@ -1,7 +1,7 @@
 extends Node
 
 var mouse_capture : bool = false
-@export var mouse_sens := 0.1            # ajusta a gusto
+@export var mouse_sens := 0.25            # ajusta a gusto
 @export var pitch_min := -89.0
 @export var pitch_max :=  89.0
 
@@ -53,11 +53,10 @@ func _physics_process(_dt: float) -> void:
 	up_move = Input.get_axis("action_crouch","action_jump")
 	# up_move queda en 0.0 salvo que tengas vuelo/jetpack continuo
 	# actualiza ángulos acumulados con el delta de este tick
-	view_angles.x += view_delta.x * mouse_sens
+	view_angles.x -= view_delta.x * mouse_sens
 	view_angles.y = clamp(view_angles.y - view_delta.y * mouse_sens, pitch_min, pitch_max) 
 	
 	user_cmd = build_usercmd()
-	print(view_angles)
 	Engine.get_singleton("GDBridge").set_user_cmd(user_cmd)
 	
 

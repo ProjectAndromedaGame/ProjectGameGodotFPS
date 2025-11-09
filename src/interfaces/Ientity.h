@@ -36,6 +36,8 @@ public:
     virtual void on_damaged(float damage, IEntity* source) {}
     virtual void on_death(IEntity* killer) {}
     virtual void on_destroyed() {}
+private:
+    virtual void apply_physics(double delta) {}
 };
 
 

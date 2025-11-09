@@ -26,6 +26,13 @@ private:
     Vector2 view_angle = Vector2(0, 0);
     float speed = 5.0f;         // velocidad de movimiento
     int current_actions = NONE; // Flags de acciones actuales
+    Camera3D *camera1p = nullptr;
+    Camera3D *camera3p = nullptr;
+    Camera3D *active_camera = nullptr;
+    bool third_person = false;
+    bool set_camera = false;
+    bool noclip = false;
+    float gravity_force = ProjectSettings::get_singleton()->get_setting("physics/3d/default_gravity").operator float();
 
 public:
     Character();
@@ -48,6 +55,7 @@ public:
     virtual void destroy() override;
 
     void _physics_process(double delta) override;
+    void _ready() override;
 
 protected:
     static void _bind_methods();
@@ -55,5 +63,7 @@ protected:
 private:
     virtual void moving(double delta) override;
     virtual void looking(double delta) override;
+    virtual void in_action(int32_t action) override;
+    virtual void apply_physics(double delta) override;
 };
 #endif

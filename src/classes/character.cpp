@@ -8,6 +8,9 @@ void Character::move(float forward, float right, float up)
     /* input de movimiento
         Recibe tres valores: adelante, derecha, arriba y mueve el personaje en esa direccion
         adelante y derecha son valores entre -1 y 1, arriba es un valor que puede ser positivo o negativo */
+    if (!noclip)
+        up = 0; // No permitir movimiento vertical si no es noclip
+
     Vector3 direction = Vector3(right, up, forward);
     this->direction = direction.normalized();
 }
@@ -24,28 +27,6 @@ void Character::do_action(int32_t action)
         recibe un entero que representa la accion a realizar
     */
     current_actions |= action;
-}
-
-void Character::moving(double delta)
-{
-    float cos_yaw = Math::cos(yaw);
-    float sin_yaw = Math::sin(yaw);
-
-    Vector3 world_dir = Vector3(
-        direction.z * sin_yaw + direction.x * cos_yaw,
-        direction.y,
-        direction.z * cos_yaw - direction.x * sin_yaw);
-
-    Vector3 velocity = world_dir * speed;
-    set_velocity(velocity);
-    move_and_slide();
-}
-
-void Character::looking(double delta)
-{
-
-    Vector3 new_rotation = Vector3(0, yaw, 0);
-    set_rotation(new_rotation);
 }
 
 EntityType Character::get_entity_type() const
@@ -97,14 +78,58 @@ void Character::destroy()
     queue_free();
 }
 
+void Character::moving(double delta)
+{
+    float cos_yaw = Math::cos(yaw);
+    float sin_yaw = Math::sin(yaw);
+
+    Vector3 velocity = Vector3((direction.z * sin_yaw + direction.x * cos_yaw) * speed, direction.y, (direction.z * cos_yaw - direction.x * sin_yaw) * speed);
+    set_velocity(velocity);
+    move_and_slide();
+}
+
+void Character::looking(double delta)
+{
+    set_rotation(Vector3(0, yaw, 0));
+    active_camera->set_rotation(Vector3(pitch, 0, 0));
+}
+
+void Character::in_action(int32_t action)
+{
+}
+
+void Character::apply_physics(double delta)
+{
+    if (noclip)
+    {
+        return;
+    }
+    direction.y = get_velocity().y;
+    direction.y -= gravity_force * float(delta);
+}
+
 void Character::_physics_process(double delta)
 {
     if (!WorldController::get_singleton()->can_play())
     {
         return;
     }
-    moving(delta);
+
     looking(delta);
+    apply_physics(delta);
+    moving(delta);
+    in_action(current_actions);
+}
+
+void Character::_ready()
+{
+    // Registrar la entidad en el WorldController
+    camera1p = get_node<Camera3D>("PlayerCamera1P");
+    camera3p = get_node<Camera3D>("PlayerCamera3P");
+    if (camera1p && camera3p)
+    {
+        active_camera = camera1p;
+    }
 }
 
 void Character::_bind_methods()
